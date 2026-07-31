@@ -15,7 +15,7 @@ type AboutPageData = {
     awardName?: string;
     year?: number;
     description?: string;
-    image?: string | null;
+    images?: (string | null)[];
   }[];
 } | null;
 

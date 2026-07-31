@@ -34,6 +34,7 @@ type WorkCarouselItem = {
   _id: string;
   title: string;
   category: string;
+  skills?: string[];
   img: string;
   slug?: string;
 };

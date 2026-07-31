@@ -27,6 +27,8 @@ export default function CustomCursor() {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
+    document.body.classList.add("custom-cursor-active");
+
     let mouseX = 0;
     let mouseY = 0;
     let cursorX = 0;
@@ -90,6 +92,7 @@ export default function CustomCursor() {
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseover", handleMouseOver);
+      document.body.classList.remove("custom-cursor-active");
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }

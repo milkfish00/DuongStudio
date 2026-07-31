@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Slider from "react-slick";
 import type { Settings } from "react-slick";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getProjectHref } from "@/app/lib/projectLink";
 
 const SITE_IMAGE_ALT = "Uyen Dao Studio";
 
@@ -17,7 +19,7 @@ export type BrandCreativeCase = {
   _id: string;
   title: string;
   slug?: string | null;
-  skills?: string[] | null;
+  skills?: (string | null | undefined)[] | null;
   summary?: string | null;
   category?: string | null;
   image?: string | null;
@@ -115,8 +117,8 @@ function CaseCarousel({
 
       <div className="pb-16 sm:pb-24">
         <Slider ref={sliderRef} {...settings}>
-          {items.map((item) => (
-            <div key={item._id} className="px-2 sm:px-0 sm:pr-6">
+          {items.map((item) => {
+            const card = (
               <article className="group flex flex-col cursor-pointer">
                 <div className="relative w-full overflow-hidden aspect-3/4 bg-[#eaded4] rounded-sm">
                   <div className="sm:hidden absolute inset-x-0 top-0 h-2/5 bg-linear-to-b from-black/55 to-transparent z-10 pointer-events-none" />
@@ -152,8 +154,20 @@ function CaseCarousel({
                   </h3>
                 </div>
               </article>
-            </div>
-          ))}
+            );
+
+            return (
+              <div key={item._id} className="px-2 sm:px-0 sm:pr-6">
+                {item.slug ? (
+                  <Link href={getProjectHref(item.slug, item.skills)}>
+                    {card}
+                  </Link>
+                ) : (
+                  card
+                )}
+              </div>
+            );
+          })}
         </Slider>
       </div>
     </section>

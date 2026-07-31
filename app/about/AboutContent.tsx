@@ -5,17 +5,72 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import Slider from "react-slick";
+import type { Settings } from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const SITE_IMAGE_ALT = "Uyen Dao Studio";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const hasImageSrc = (value: string | null | undefined): value is string =>
+  typeof value === "string" && value.trim().length > 0;
+
+const RECOGNITION_SLIDER_SETTINGS: Settings = {
+  dots: true,
+  arrows: false,
+  infinite: true,
+  autoplay: true,
+  autoplaySpeed: 4000,
+  speed: 900,
+  fade: true,
+  cssEase: "ease-in-out",
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  pauseOnHover: false,
+};
+
+function RecognitionImage({
+  images,
+  alt,
+}: {
+  images: string[];
+  alt: string;
+}) {
+  if (images.length === 0) return null;
+
+  if (images.length === 1) {
+    return (
+      <Image src={images[0]} alt={alt} fill className="object-cover" sizes="50vw" />
+    );
+  }
+
+  return (
+    <Slider
+      className="recognition-slider absolute inset-0 h-full w-full"
+      {...RECOGNITION_SLIDER_SETTINGS}>
+      {images.map((src, index) => (
+        <div key={`${src}-${index}`} className="relative h-full w-full">
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover"
+            sizes="50vw"
+          />
+        </div>
+      ))}
+    </Slider>
+  );
+}
 
 type Recognition = {
   _key?: string;
   awardName?: string;
   year?: number;
   description?: string;
-  image?: string | null;
+  images?: (string | null)[];
 };
 
 type SocialLink = {
@@ -174,6 +229,7 @@ export default function AboutContent({
         <div className="divide-y divide-red/10 border-t border-red/10 pt-10 sm:pt-12 lg:pt-14">
           {recognitions.map((recognition, index) => {
             const isEven = index % 2 === 0;
+            const images = recognition.images?.filter(hasImageSrc) ?? [];
 
             return (
               <div
@@ -201,15 +257,10 @@ export default function AboutContent({
                   className={`relative hidden min-h-112 overflow-hidden bg-red lg:block ${
                     isEven ? "" : "lg:order-first"
                   }`}>
-                  {recognition.image ? (
-                    <Image
-                      src={recognition.image}
-                      alt={recognition.awardName || SITE_IMAGE_ALT}
-                      fill
-                      className="object-cover"
-                      sizes="50vw"
-                    />
-                  ) : null}
+                  <RecognitionImage
+                    images={images}
+                    alt={recognition.awardName || SITE_IMAGE_ALT}
+                  />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.16),transparent_48%)]" />
                   <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/10 to-transparent" />
                 </div>

@@ -9,6 +9,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getProjectHref } from "@/app/lib/projectLink";
 
 const SITE_IMAGE_ALT = "Uyen Dao Studio";
 
@@ -17,6 +18,7 @@ gsap.registerPlugin(ScrollTrigger);
 type Work = {
   title: string;
   category: string;
+  skills?: string[];
   img: string;
   slug?: string;
 };
@@ -161,7 +163,7 @@ export default function WorkSection({ works }: { works?: Work[] }) {
               key={w.slug || `${w.title}-${index}`}
               className="px-2 sm:px-0 sm:pr-6">
               <Link
-                href={w.slug ? `/work/${w.slug}` : "/work"}
+                href={w.slug ? getProjectHref(w.slug, w.skills) : "/work"}
                 className="group flex flex-col">
                 {/* Image — Aspect ratio changed to aspect-3/4 for dynamic Portrait styling */}
                 <div className="relative w-full overflow-hidden aspect-3/4 bg-red/5 rounded-sm">

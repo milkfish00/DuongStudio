@@ -210,7 +210,11 @@ export default function ContactContent({
         </div>
 
         <div className="flex flex-col gap-12 lg:pt-24">
-          <img src="/ui/star.svg" className="h-16 w-16 invert rounded-full" />
+          <img
+            src="/ui/star.svg"
+            alt=""
+            className="h-16 w-16 invert rounded-full"
+          />
 
           <div className="space-y-3 text-sm text-white/70">
             <p className="text-xs uppercase text-white/30">Contact details</p>

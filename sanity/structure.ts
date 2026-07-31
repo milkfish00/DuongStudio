@@ -7,9 +7,6 @@ import {
   OlistIcon,
 } from "@sanity/icons";
 
-// Singleton document types — only one document exists per type
-const SINGLETONS = ["siteSettings", "aboutPage"];
-
 export const structure: StructureResolver = (S) =>
   S.list()
     .title("Studio")

@@ -15,6 +15,7 @@ type ProjectDetail = {
     title?: string;
     description?: string;
   } | null;
+  coverImage?: string | null;
   boards?: (string | null)[];
 };
 
@@ -61,7 +62,9 @@ export default function ProjectDetailContent({
     .filter(Boolean)
     .join(" / ");
 
-  const imageSources = (project.boards ?? []).filter(hasImageSrc);
+  const imageSources = [project.coverImage, ...(project.boards ?? [])].filter(
+    hasImageSrc,
+  );
   const imageAt = (index: number) => {
     if (imageSources.length === 0) {
       return fallbackImage(`${project.slug}-${index}`);

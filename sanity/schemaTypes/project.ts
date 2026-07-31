@@ -60,6 +60,15 @@ export const project = defineType({
       ],
     }),
     defineField({
+      name: "coverImage",
+      title: "Cover Image",
+      description: "The main image used to represent this project.",
+      type: "image",
+      options: { hotspot: true },
+      validation: (rule) =>
+        rule.required().error("A cover image is required before publishing."),
+    }),
+    defineField({
       name: "boards",
       title: "Board Images",
       description:
@@ -77,13 +86,14 @@ export const project = defineType({
   preview: {
     select: {
       title: "title",
-      media: "boards.0",
+      media: "coverImage",
+      fallbackMedia: "boards.0",
       subtitle: "year",
     },
-    prepare({ title, media, subtitle }) {
+    prepare({ title, media, fallbackMedia, subtitle }) {
       return {
         title,
-        media,
+        media: media || fallbackMedia,
         subtitle: subtitle ? String(subtitle) : "Project",
       };
     },

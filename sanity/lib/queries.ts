@@ -27,7 +27,7 @@ const PROJECT_CARD_FIELDS = `
   skills,
   year,
   "boards": coalesce(boards[].asset->url, gallery[].asset->url, []),
-  "hero": coalesce(boards[0].asset->url, gallery[0].asset->url, mainImage.asset->url)
+  "hero": coalesce(coverImage.asset->url, boards[0].asset->url, gallery[0].asset->url, mainImage.asset->url)
 `;
 
 export const FEATURED_PROJECTS_QUERY = groq`
@@ -41,8 +41,9 @@ export const WORK_CAROUSEL_QUERY = groq`
     _id,
     title,
     "slug": slug.current,
+    skills,
     "category": coalesce(skills[0], "Project"),
-    "img": coalesce(boards[0].asset->url, gallery[0].asset->url, mainImage.asset->url)
+    "img": coalesce(coverImage.asset->url, boards[0].asset->url, gallery[0].asset->url, mainImage.asset->url)
   }
 `;
 
@@ -63,6 +64,7 @@ export const PROJECT_DETAIL_QUERY = groq`
       title,
       description
     },
+    "coverImage": coverImage.asset->url,
     "boards": coalesce(boards[].asset->url, [])
   }
 `;
@@ -72,7 +74,7 @@ export const PROJECT_NAV_QUERY = groq`
     _id,
     title,
     "slug": slug.current,
-    "image": boards[0].asset->url
+    "image": coalesce(coverImage.asset->url, boards[0].asset->url)
   }
 `;
 
@@ -101,7 +103,7 @@ export const ABOUT_PAGE_QUERY = groq`
       awardName,
       year,
       description,
-      "image": image.asset->url
+      "images": coalesce(images[].asset->url, [])
     }
   }
 `;
@@ -124,7 +126,7 @@ export const INDUSTRIAL_DESIGN_PROJECTS_QUERY = groq`
     skills,
     "summary": additionalInformation.description,
     "category": skills[0],
-    "image": coalesce(boards[0].asset->url, gallery[0].asset->url, mainImage.asset->url)
+    "image": coalesce(coverImage.asset->url, boards[0].asset->url, gallery[0].asset->url, mainImage.asset->url)
   }
 `;
 
@@ -142,6 +144,6 @@ export const BRAND_CREATIVE_CASES_QUERY = groq`
     skills,
     "summary": additionalInformation.description,
     "category": skills[0],
-    "image": coalesce(boards[0].asset->url, gallery[0].asset->url, mainImage.asset->url)
+    "image": coalesce(coverImage.asset->url, boards[0].asset->url, gallery[0].asset->url, mainImage.asset->url)
   }
 `;

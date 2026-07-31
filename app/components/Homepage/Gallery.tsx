@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getProjectHref } from "@/app/lib/projectLink";
 
 const SITE_IMAGE_ALT = "Uyen Dao Studio";
 
@@ -184,7 +185,7 @@ const Gallery = ({ projects }: { projects?: SanityWork[] | null }) => {
             className={`px-[5vw] ${i === 0 ? "pt-6 pb-16" : "py-16"} md:py-24`}>
             <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)] justify-items-center">
               <Link
-                href={`/work/${w.slug}`}
+                href={getProjectHref(w.slug, w.skills)}
                 className="img-wrap group relative block w-full max-w-[72rem] overflow-hidden p-6 sm:p-10 lg:p-14"
                 data-y-from={i % 2 === 0 ? "4" : "6"}
                 data-y-to={i % 2 === 0 ? "-4" : "-3"}>

@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import RevealOnScroll from "./RevealOnScroll";
 import Preloader from "./Preloader";
+import CustomCursor from "./CustomCursor";
 
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -16,6 +17,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <CustomCursor />
       <Preloader />
       <RevealOnScroll />
 

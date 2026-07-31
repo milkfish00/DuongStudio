@@ -33,10 +33,18 @@ export const aboutPage = defineType({
           type: "object",
           fields: [
             defineField({
-              name: "image",
-              title: "Image",
-              type: "image",
-              options: { hotspot: true },
+              name: "images",
+              title: "Images",
+              description:
+                "Add multiple images to display as an autoplaying slider.",
+              type: "array",
+              options: { layout: "grid" },
+              of: [
+                defineArrayMember({
+                  type: "image",
+                  options: { hotspot: true },
+                }),
+              ],
             }),
             defineField({
               name: "awardName",
@@ -61,7 +69,7 @@ export const aboutPage = defineType({
             select: {
               title: "awardName",
               subtitle: "year",
-              media: "image",
+              media: "images.0",
             },
             prepare({ title, subtitle, media }) {
               return {

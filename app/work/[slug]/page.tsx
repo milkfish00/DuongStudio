@@ -13,6 +13,7 @@ type ProjectDetail = {
     title?: string;
     description?: string;
   } | null;
+  coverImage?: string | null;
   boards?: (string | null)[];
 };
 

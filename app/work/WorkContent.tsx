@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import type { Settings } from "react-slick";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getProjectHref } from "@/app/lib/projectLink";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -338,7 +339,7 @@ export default function WorkContent({
                 {section.items.map((work) => (
                   <div key={work.slug} className="pr-4 sm:pr-6 outline-none">
                     <Link
-                      href={`/work/${work.slug}`}
+                      href={getProjectHref(work.slug, work.skills)}
                       className="group block project-card">
                       <div className="relative aspect-3/4 w-full overflow-hidden bg-red/5 rounded-sm">
                         <img
